@@ -72,7 +72,3 @@ CREATE TABLE ledger_entries (
 CREATE INDEX idx_ledger_transaction_id ON ledger_entries (transaction_id);
 
 CREATE INDEX idx_ledger_account_id ON ledger_entries (account_id);
-
-CREATE INDEX idx_ledger_entry_type ON ledger_entries (entry_type);
-
-CREATE INDEX idx_ledger_transaction_type ON ledger_entries (transaction_type);
