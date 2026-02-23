@@ -19,7 +19,8 @@ public enum ErrorCode {
     HTTP_SERVER_ERROR_CODE(15000, "Http Server error code"),
 
 
-    ACCOUNT_NOT_FOUND(10600, "Account not found");
+    ACCOUNT_NOT_FOUND_CODE(10600, "Account not found"),
+    ACCOUNT_AMOUNT_OR_CURRENCY_INVALID_CODE(10610, "Account amount or currency invalid");
 
     final int code;
     final String message;

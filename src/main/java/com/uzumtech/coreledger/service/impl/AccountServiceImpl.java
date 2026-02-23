@@ -1,9 +1,11 @@
 package com.uzumtech.coreledger.service.impl;
 
 import com.uzumtech.coreledger.constant.enums.ErrorCode;
+import com.uzumtech.coreledger.dto.request.ValidationRequest;
 import com.uzumtech.coreledger.dto.response.AccountBalanceResponse;
 import com.uzumtech.coreledger.dto.response.AccountResponse;
 import com.uzumtech.coreledger.entity.AccountEntity;
+import com.uzumtech.coreledger.exception.AccountInvalidException;
 import com.uzumtech.coreledger.exception.AccountNotFoundException;
 import com.uzumtech.coreledger.mapper.AccountMapper;
 import com.uzumtech.coreledger.repository.AccountRepository;
@@ -32,14 +34,31 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountEntity findByAccountId(Long accountId) {
-        return accountRepository.findById(accountId).orElseThrow(() -> new AccountNotFoundException(ErrorCode.ACCOUNT_NOT_FOUND));
+        return accountRepository.findById(accountId).orElseThrow(() -> new AccountNotFoundException(ErrorCode.ACCOUNT_NOT_FOUND_CODE));
+    }
+
+    @Override
+    public AccountEntity findByAmsAccountId(UUID amsAccountId) {
+        return accountRepository.findByAmsAccountId(amsAccountId).orElseThrow(() -> new AccountNotFoundException(ErrorCode.ACCOUNT_NOT_FOUND_CODE));
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public AccountResponse getByAmsAccountId(UUID amsAccountId) {
+        AccountEntity account = findByAmsAccountId(amsAccountId);
+
+
+        return accountMapper.entityToResponse(account);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public AccountResponse findByAmsAccountId(UUID amsAccountId) {
-        AccountEntity account = accountRepository.findByAmsAccountId(amsAccountId).orElseThrow(() -> new AccountNotFoundException(ErrorCode.ACCOUNT_NOT_FOUND));
+    public void validateBalanceByAccountId(ValidationRequest request) {
+        AccountEntity account = findByAmsAccountId(request.amsAccountId());
 
-        return accountMapper.entityToResponse(account);
+        if (account.getActualBalance() < request.amount() || account.getCurrency() != request.currency()) {
+            throw new AccountInvalidException(ErrorCode.ACCOUNT_AMOUNT_OR_CURRENCY_INVALID_CODE);
+        }
     }
 }
