@@ -4,9 +4,9 @@ spring:
 
   # JPA configuration
   datasource:
-    url: jdbc:postgresql://localhost:5432/core_ledger_db
-    username: mark
-    password: root_pass
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
     tomcat:
       test-on-borrow: true
@@ -36,11 +36,10 @@ spring:
 
   kafka:
     consumer:
-      bootstrap-servers: localhost:9092
-      auto-offset-reset: earliest
+      bootstrap-servers: kafka:9092
 
     producer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: kafka:9092
       acks: -1
 
   # Flyway configuration
@@ -53,7 +52,7 @@ spring:
 
 # Tomcat configuration
 server:
-  port: 8080
+  port: ${PORT}
   tomcat:
     connection-timeout: 10000
     accept-count: 100
@@ -69,3 +68,10 @@ server:
 
 logging:
   config: classpath:log4j2.yml
+
+  level:
+    org:
+      apache:
+        kafka: WARN
+      springframework:
+        kafka: WARN

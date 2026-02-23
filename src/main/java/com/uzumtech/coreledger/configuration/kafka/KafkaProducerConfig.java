@@ -1,6 +1,8 @@
 package com.uzumtech.coreledger.configuration.kafka;
 
 import com.uzumtech.coreledger.configuration.property.KafkaProperties;
+import com.uzumtech.coreledger.dto.event.TransactionEvent;
+import com.uzumtech.coreledger.dto.event.TransactionResultEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
@@ -12,6 +14,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.DelegatingByTypeSerializer;
 import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
+import org.springframework.kafka.support.serializer.JacksonJsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +43,9 @@ public class KafkaProducerConfig {
         ProducerFactory<String, Object> factory = new DefaultKafkaProducerFactory<>(producerConfigs(), new StringSerializer(),
             new DelegatingByTypeSerializer(
                 Map.of(
-                    byte[].class, new ByteArraySerializer()
+                    byte[].class, new ByteArraySerializer(),
+                    TransactionEvent.class, new JacksonJsonSerializer<>(),
+                    TransactionResultEvent.class, new JacksonJsonSerializer<>()
                 )));
 
         return new KafkaTemplate<>(factory);

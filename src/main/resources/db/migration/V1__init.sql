@@ -12,7 +12,8 @@ CREATE TYPE account_status AS ENUM (
 
 CREATE TABLE accounts (
     id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    client_id bigint NOT NULL,
+    client_id UUID NOT NULL,
+    ams_account_id UUID NOT NULL UNIQUE,
     currency currency NOT NULL,
     actual_balance bigint NOT NULL CHECK (actual_balance >= 0),
     reserved_balance bigint NOT NULL DEFAULT 0 CHECK (reserved_balance >= 0),
