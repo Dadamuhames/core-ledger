@@ -14,28 +14,12 @@ public enum ErrorCode {
     METHOD_NOT_SUPPORTED_ERROR_CODE(10008, "Method not supported"),
     MISSING_REQUEST_HEADER_ERROR_CODE(10009, "Missing request header"),
 
-    ROLE_NOT_SUPPORTED_CODE(10010, "Provided Role not supported by the system"),
-
-    INSPECTOR_INVALID_CODE(10011, "Inspector authentication invalid"),
-    USER_INVALID_CODE(10012, "User authentication invalid"),
-    JWT_INVALID_CODE(10013, "JWT invalid"),
-    REFRESH_TOKEN_INVALID_CODE(10014, "Refresh token invalid"),
-    LOGIN_INVALID_CODE(10015, "Login invalid. Login using PINFL and OTP"),
-    PASSWORD_INVALID_CODE(10016, "Password invalid"),
-    PASSWORD_NOT_EXISTS_CODE(10116, "Password is not set for user. User OTP to login"),
-    OTP_EXPIRED_CODE(10017, "OTP expired or invalid"),
-
-    OTP_REQUEST_LOCKED_CODE(10018, "OTP request locked. Wait and try again"),
-    OTP_CHECK_LOCKED_CODE(10019, "Too many incorrect attempts. Wait and try again"),
-
 
     HTTP_CLIENT_ERROR_CODE(14000, "Http Client error code"),
     HTTP_SERVER_ERROR_CODE(15000, "Http Server error code"),
-    NOTIFICATION_REQUEST_INVALID_CODE(16000, "Request to notification service invalid"),
 
-    LOGIN_OR_TAX_NUMBER_NOT_UNIQUE(12000, "login or taxNumber already in use"),
 
-    EVENT_PUBLISHER_NOT_IMPLEMENTED(13000, "Event publisher not implemented");
+    ACCOUNT_NOT_FOUND(10600, "Account not found");
 
     final int code;
     final String message;

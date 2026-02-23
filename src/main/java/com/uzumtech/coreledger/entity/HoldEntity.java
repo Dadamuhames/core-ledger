@@ -40,10 +40,10 @@ public class HoldEntity extends BaseEntity {
     @Column(nullable = false)
     private Long amount;
 
-    @Column(insertable = false)
+    @Column(insertable = false, nullable = false, updatable = false)
     OffsetDateTime expiresAt;
 
     @UpdateTimestamp
-    @Column(insertable = false)
+    @Column(insertable = false, nullable = false)
     OffsetDateTime updatedAt;
 }

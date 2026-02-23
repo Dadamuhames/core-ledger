@@ -18,6 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -29,11 +30,14 @@ import java.time.OffsetDateTime;
 public class AccountEntity extends BaseEntity {
 
     @Column(nullable = false)
-    private Long clientId;
+    private UUID clientId;
+
+    @Column(nullable = false)
+    private UUID amsAccountId;
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
-    @Column(columnDefinition = "currency")
+    @Column(columnDefinition = "currency", nullable = false)
     private Currency currency;
 
     @PositiveOrZero
@@ -45,10 +49,10 @@ public class AccountEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
-    @Column(columnDefinition = "status")
+    @Column(columnDefinition = "status", nullable = false)
     private AccountStatus status;
 
     @UpdateTimestamp
-    @Column(insertable = false)
+    @Column(insertable = false, nullable = false)
     OffsetDateTime updatedAt;
 }
